@@ -28,11 +28,11 @@ BuildRequires:  devtoolset-7-toolchain
 A build of LLVM and Clang to make bpftrace and BCC possible on
 RH7. Don't use this as your daily compiler!
 
-# %package libs
-# Summary: Libs required for running bcc and bpftrace
+%package libs
+Summary: Libs required for running the dynamically linked version of bpftrace
 
-# %description libs
-# Libs required for running bcc and bpftrace
+%description libs
+Libs required for running the dynamically linked version of bpftrace
 
 %prep
 
@@ -48,7 +48,8 @@ cd build
 
 cmake3 .. \
   -DBUILD_SHARED_LIBS=OFF \
-  -DLLVM_BUILD_LLVM_DYLIB=OFF \
+  -DLLVM_BUILD_LLVM_DYLIB=ON \
+  -DLLVM_LINK_LLVM_DYLIB=OFF \
   -DLIBCLANG_BUILD_STATIC=ON \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -106,6 +107,6 @@ rm %{buildroot}%{_bindir}/c-index-test
 %{_libdir}/lib*.so
 %{_libdir}/lib*.so.%{maj_ver}
 
-# %files libs
-# %{_libdir}/libLLVM*.so
-# %{_libdir}/libclang.so*
+%files libs
+%{_libdir}/libLLVM*.so
+%{_libdir}/libclang.so*
