@@ -110,3 +110,7 @@ rm %{buildroot}%{_bindir}/c-index-test
 %files libs
 %{_libdir}/libLLVM*.so
 %{_libdir}/libclang.so*
+
+%changelog
+* Sun Jun 30 2019 bas smit - 0.9.1
+- Initial version
