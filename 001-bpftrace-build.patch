@@ -1,0 +1,44 @@
+From dde3604a347e7315cabf0cdcadd85d1944628581 Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Sun, 30 Jun 2019 00:54:28 +0200
+Subject: [PATCH] build: EL7 support
+
+---
+ cmake/FindLibBcc.cmake | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/cmake/FindLibBcc.cmake b/cmake/FindLibBcc.cmake
+index 921df97..5255666 100644
+--- a/cmake/FindLibBcc.cmake
++++ b/cmake/FindLibBcc.cmake
+@@ -32,6 +32,7 @@ find_library (LIBBCC_LIBRARIES
+     bcc
+   PATHS
+     /usr/lib
++    /usr/lib64
+     /usr/local/lib
+     /opt/local/lib
+     /sw/lib
+@@ -40,9 +41,10 @@ find_library (LIBBCC_LIBRARIES
+ 
+ find_library (LIBBPF_LIBRARY_STATIC
+   NAMES
+-    bpf
++    bcc_bpf
+   PATHS
+     /usr/lib
++    /usr/lib64
+     /usr/local/lib
+     /opt/local/lib
+     /sw/lib
+@@ -54,6 +56,7 @@ find_library (LIBBCC_LOADER_LIBRARY_STATIC
+     bcc-loader-static
+   PATHS
+     /usr/lib
++    /usr/lib64
+     /usr/local/lib
+     /opt/local/lib
+     /sw/lib
+-- 
+2.22.0
+
