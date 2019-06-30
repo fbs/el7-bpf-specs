@@ -30,6 +30,7 @@ BuildRequires:  devtoolset-7-toolchain
 BuildRequires:  ebpftoolsbuilder-llvm-clang
 
 Requires:       %{name}-tools = %{version}-%{release}
+Requires:       kernel-devel
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
