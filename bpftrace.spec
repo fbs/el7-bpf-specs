@@ -2,6 +2,18 @@
 
 %global pkgname bpftrace
 
+%if %{with static}
+# The static build is a bit of a hack and
+# doesn't build th docs and tools package
+# so ignore other files
+%global _unpackaged_files_terminate_build 0
+# The post hooks strip the binary which removes
+# the BEGIN_trigger and END_trigger functions
+# which are needed for the BEGIN and END probes
+%global __os_install_post %{nil}
+%global _find_debuginfo_opts -g
+%endif
+
 Name:           %{pkgname}%{?with_static:-static}
 Version:        0.9.1
 Release:        0%{?dist}
@@ -11,6 +23,9 @@ License:        ASL 2.0
 URL:            https://github.com/iovisor/bpftrace
 Source0:        %{url}/archive/v%{version}.tar.gz
 Patch0:         001-bpftrace-build.patch
+%if %{with static}
+Patch100:       001-bpftrace-static-optimize.patch
+%endif
 
 ExclusiveArch:  x86_64
 
@@ -43,6 +58,22 @@ capabilities: kernel dynamic tracing (kprobes), user-level dynamic tracing
 (uprobes), and tracepoints. The BPFtrace language is inspired by awk and C,
 and predecessor tracers such as DTrace and SystemTap
 
+%if !%{with static}
+%package tools
+Summary:        Command line tools for BPFtrace
+BuildArch:      noarch
+
+%description tools
+Command line tools for BPFtrace
+
+%package doc
+Summary:        BPFtrace documentation
+BuildArch:      noarch
+
+%description doc
+BPFtrace documentation
+
+%endif
 
 %prep
 %autosetup -p1 -n bpftrace-%{version}
@@ -50,12 +81,11 @@ and predecessor tracers such as DTrace and SystemTap
 %build
 . /opt/rh/devtoolset-7/enable
 %cmake3 . \
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-        -DCMAKE_VERBOSE_MAKEFILE=0 \
-        -DBUILD_TESTING:BOOL=OFF \
-        -DBUILD_SHARED_LIBS:BOOL=OFF \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DBUILD_TESTING:BOOL=OFF \
+  -DBUILD_SHARED_LIBS:BOOL=OFF \
 %if %{with static}
-        -DSTATIC_LINKING=1
+  -DSTATIC_LINKING=1
 %endif
 
 %make_build
@@ -73,16 +103,24 @@ mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
 
 
 %files
+%license LICENSE
+%{_bindir}/%{pkgname}
+
+%if !%{with static}
+%exclude %{_datadir}
+
+%files doc
 %doc README.md CONTRIBUTING-TOOLS.md
 %doc docs/reference_guide.md docs/tutorial_one_liners.md
-%license LICENSE
+
+%files tools
 %dir %{_datadir}/%{pkgname}
 %dir %{_datadir}/%{pkgname}/tools
 %dir %{_datadir}/%{pkgname}/tools/doc
-%{_bindir}/%{pkgname}
 %{_mandir}/man8/*
 %attr(0755,-,-) %{_datadir}/%{pkgname}/tools/*.bt
 %{_datadir}/%{pkgname}/tools/doc/*.txt
+%endif
 
 
 %changelog

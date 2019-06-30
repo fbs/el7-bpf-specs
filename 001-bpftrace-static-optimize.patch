@@ -1,0 +1,43 @@
+commit ec071007a7ad177f1ec2cc8a3c78d17a5838ba65
+Author: bas smit <bsmit@hostnet.nl>
+Date:   Sun Jun 30 21:01:54 2019 +0200
+
+    build: Force disable optimization
+    
+    For some reason the static build breaks with optimization enabled, the
+    struct parsing step:
+    
+    ```
+    libclang: crash detected during parsing: {
+      'source_filename' : 'definitions.h'
+      'command_line_args' : ['clang', '-isystem', '/usr/local/include', '-isystem', '/bpftrace/include', '-isystem', '/usr/include', '-nostdinc', '-isystem', '/virtual/lib/clang/include', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/source/arch/x86/include', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/build/arch/x86/include/generated', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/source/include', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/build/include', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/source/arch/x86/include/uapi', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/build/arch/x86/include/generated/uapi', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/source/include/uapi', '-I/lib/modules/3.10.0-957.21.3.el7.x86_64/build/include/generated/uapi', '-include', '/lib/modules/3.10.0-957.21.3.el7.x86_64/source/include/linux/kconfig.h', '-D__KERNEL__', '-D__BPF_TRACING__', '-D__HAVE_BUILTIN_BSWAP16__', '-D__HAVE_BUILTIN_BSWAP32__', '-D__HAVE_BUILTIN_BSWAP64__', '-DKBUILD_MODNAME='"bpftrace"'', '-include', 'asm_goto_workaround.h'],
+      'unsaved_files' : [('definitions.h', '...', 866), ('/bpftrace/include/__stddef_max_align_t.h', '...', 1771), ('/bpftrace/include/float.h', '...', 5192), ('/bpftrace/include/limits.h', '...', 3735), ('/bpftrace/include/stdarg.h', '...', 2025), ('/bpftrace/include/stddef.h', '...', 4499), ('/bpftrace/include/stdint.h', '...', 23388), ('/bpftrace/include/asm_goto_workaround.h', '...', 667)],
+      'options' : 1,
+    }
+    ```
+    
+    ```
+    (gdb) bt
+    0  0x00000000028da191 in strlen ()
+    1  0x000000000058f35d in clang::CIndexer::getClangResourcesPath() ()
+    2  0x000000000058a666 in void llvm::function_ref<void ()>::callback_fn<clang_parseTranslationUnit2FullArgv::{lambda()#1}>(long) ()
+    3  0x0000000002700743 in llvm::CrashRecoveryContext::RunSafely(llvm::function_ref<void ()>) ()
+    4  0x0000000002700844 in RunSafelyOnThread_Dispatch(void*) ()
+    5  0x0000000002798c5d in ExecuteOnThread_Dispatch(void*) ()
+    6  0x00000000027a36f5 in start_thread ()
+    7  0x00000000029202d9 in clone ()
+    ```
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a626fbc..dcac32d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,6 +25,8 @@ add_compile_options("-Wunreachable-code")
+ #add_compile_options("-Wformat=2")
+ add_compile_options("-Wstrict-overflow=5")
+ add_compile_options("-Wdisabled-optimization")
++add_compile_options("-O0")
++add_compile_options("-Wno-cpp")
+ 
+ include(CTest)
+ 
