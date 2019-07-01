@@ -1,0 +1,15 @@
+diff --git a/tools/bpf/bpftool/Makefile b/tools/bpf/bpftool/Makefile
+index 4ad1f08..0d6ca98 100644
+--- a/tools/bpf/bpftool/Makefile
++++ b/tools/bpf/bpftool/Makefile
+@@ -51,7 +51,10 @@ ifneq ($(EXTRA_LDFLAGS),)
+ LDFLAGS += $(EXTRA_LDFLAGS)
+ endif
+
++LDFLAGS += -static
++
+ LIBS = -lelf $(LIBBPF)
++LIBS += -lz -lc
+
+ INSTALL ?= install
+ RM ?= rm -f
