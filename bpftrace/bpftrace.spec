@@ -22,9 +22,10 @@ License:        ASL 2.0
 
 URL:            https://github.com/iovisor/bpftrace
 Source0:        %{url}/archive/v%{version}.tar.gz
-Patch0:         001-bpftrace-build.patch
+Patch0:         0001-build-EL7-support.patch
+Patch1:         0001-Patch-tools-for-EL7.patch
 %if %{with static}
-Patch100:       001-bpftrace-static-optimize.patch
+Patch100:       0001-build-Force-disable-optimization.patch
 %endif
 
 ExclusiveArch:  x86_64

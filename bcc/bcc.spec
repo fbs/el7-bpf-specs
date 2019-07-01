@@ -6,17 +6,9 @@ License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
 # Generate source tarball until upstream bug is fixed
 # See https://github.com/iovisor/bcc/issues/2261
-# To generate the tarball, use the following commands
-# git clone -b "v0.10.0" --single-branch --depth 1 url bcc-0.10.0
-# pushd bcc-0.10.0
-# git submodule update --init
-# popd
-# tar zcvf bcc-0.10.0.tar.gz bcc-0.10.0/
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-# Arches will be included as upstream support is added and dependencies are
-# satisfied in the respective arches
-ExclusiveArch:  x86_64 %{power64} aarch64 s390x
+ExclusiveArch:  x86_64
 
 BuildRequires:  bison
 BuildRequires:  cmake3

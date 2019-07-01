@@ -5,7 +5,7 @@ Summary: Inspection and simple manipulation of eBPF programs and maps
 License: GPLv2
 URL: http://www.kernel.org/
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{version}.tar.xz
-Patch0: 001-bpftool-buildstatic.patch
+Patch0: 0001-build-static.patch
 
 BuildRequires: elfutils-libelf-devel-static
 BuildRequires: zlib-static

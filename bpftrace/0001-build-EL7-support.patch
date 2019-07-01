@@ -1,6 +1,6 @@
-From dde3604a347e7315cabf0cdcadd85d1944628581 Mon Sep 17 00:00:00 2001
-From: bas smit <bas@baslab.org>
-Date: Sun, 30 Jun 2019 00:54:28 +0200
+From fc9fd1f658b30fdbf141e5b63e5450b517841c2e Mon Sep 17 00:00:00 2001
+From: bas smit <bsmit@hostnet.nl>
+Date: Sun, 30 Jun 2019 12:39:26 +0200
 Subject: [PATCH] build: EL7 support
 
 ---
