@@ -1,0 +1,68 @@
+From d856eb3eebe94c896aaeb535893df6ab676cddae Mon Sep 17 00:00:00 2001
+From: bas smit <bsmit@hostnet.nl>
+Date: Mon, 1 Jul 2019 23:52:44 +0200
+Subject: [PATCH] tools: ext4dist based on xfsdist
+
+---
+ tools/ext4dist.bt | 49 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+ create mode 100755 tools/ext4dist.bt
+
+diff --git a/tools/ext4dist.bt b/tools/ext4dist.bt
+new file mode 100755
+index 0000000..f250d29
+--- /dev/null
++++ b/tools/ext4dist.bt
+@@ -0,0 +1,49 @@
++#!/usr/bin/env bpftrace
++/*
++ * ext4dist	Summarize ext4 operation latency.
++ *		For Linux, uses bpftrace and eBPF.
++ *
++ * This traces four common file system calls: read, write, open, and fsync.
++ * It can be customized to trace more if desired.
++ *
++ * USAGE: ext4dist.bt
++ *
++ * This is a bpftrace version of the bcc tool of the same name.
++ *
++ * Copyright 2018 Netflix, Inc.
++ * Licensed under the Apache License, Version 2.0 (the "License")
++ *
++ * 01-Jul-2019	bas smit	Copied and modified xfsdist
++ * 08-Sep-2018	Brendan Gregg	Created xfsdist
++ */
++
++BEGIN
++{
++	printf("Tracing ext4 operation latency... Hit Ctrl-C to end.\n");
++}
++
++kprobe:generic_file_aio_read,
++kprobe:ext4_file_write,
++kprobe:ext4_file_open,
++kprobe:ext4_sync_file
++{
++	@start[tid] = nsecs;
++	@name[tid] = func;
++}
++
++kretprobe:generic_file_aio_read,
++kretprobe:ext4_file_write,
++kretprobe:ext4_file_open,
++kretprobe:ext4_sync_file
++/@start[tid]/
++{
++	@us[@name[tid]] = hist((nsecs - @start[tid]) / 1000);
++	delete(@start[tid]);
++	delete(@name[tid]);
++}
++
++END
++{
++	clear(@start);
++	clear(@name);
++}
+-- 
+2.22.0
+

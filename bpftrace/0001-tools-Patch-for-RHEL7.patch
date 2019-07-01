@@ -1,0 +1,96 @@
+From ffbc70d74b0f95a0509459d5be3ecfe520edb4fe Mon Sep 17 00:00:00 2001
+From: bas smit <bsmit@hostnet.nl>
+Date: Sun, 30 Jun 2019 12:41:22 +0200
+Subject: [PATCH] tools: Patch for RHEL7
+
+---
+ tools/execsnoop.bt      |  5 +++--
+ tools/gethostlatency.bt | 13 +++++++------
+ tools/xfsdist.bt        |  8 ++++----
+ 3 files changed, 14 insertions(+), 12 deletions(-)
+
+diff --git a/tools/execsnoop.bt b/tools/execsnoop.bt
+index 357f09d..a5103f0 100755
+--- a/tools/execsnoop.bt
++++ b/tools/execsnoop.bt
+@@ -13,6 +13,7 @@
+  *
+  * 15-Nov-2017	Brendan Gregg	Created this.
+  * 11-Sep-2018	   "     "	Switched to use join().
++ * 30-Jun-2019  Bas Smit  Use kprobe for EL7 support
+  */
+ 
+ BEGIN
+@@ -20,8 +21,8 @@ BEGIN
+ 	printf("%-10s %-5s %s\n", "TIME(ms)", "PID", "ARGS");
+ }
+ 
+-tracepoint:syscalls:sys_enter_execve
++kprobe:SyS_execve
+ {
+ 	printf("%-10u %-5d ", elapsed / 1000000, pid);
+-	join(args->argv);
++	join(arg1);
+ }
+diff --git a/tools/gethostlatency.bt b/tools/gethostlatency.bt
+index a1ac1b2..435b519 100755
+--- a/tools/gethostlatency.bt
++++ b/tools/gethostlatency.bt
+@@ -26,17 +26,17 @@ BEGIN
+ 	    "HOST");
+ }
+ 
+-uprobe:/lib/x86_64-linux-gnu/libc.so.6:getaddrinfo,
+-uprobe:/lib/x86_64-linux-gnu/libc.so.6:gethostbyname,
+-uprobe:/lib/x86_64-linux-gnu/libc.so.6:gethostbyname2
++uprobe:/usr/lib64/libc.so.6:getaddrinfo,
++uprobe:/usr/lib64/libc.so.6:gethostbyname,
++uprobe:/usr/lib64/libc.so.6:gethostbyname2
+ {
+ 	@start[tid] = nsecs;
+ 	@name[tid] = arg0;
+ }
+ 
+-uretprobe:/lib/x86_64-linux-gnu/libc.so.6:getaddrinfo,
+-uretprobe:/lib/x86_64-linux-gnu/libc.so.6:gethostbyname,
+-uretprobe:/lib/x86_64-linux-gnu/libc.so.6:gethostbyname2
++uretprobe:/usr/lib64/libc.so.6:getaddrinfo,
++uretprobe:/usr/lib64/libc.so.6:gethostbyname,
++uretprobe:/usr/lib64/libc.so.6:gethostbyname2
+ /@start[tid]/
+ {
+ 	$latms = (nsecs - @start[tid]) / 1000000;
+@@ -45,3 +45,4 @@ uretprobe:/lib/x86_64-linux-gnu/libc.so.6:gethostbyname2
+ 	delete(@start[tid]);
+ 	delete(@name[tid]);
+ }
++
+diff --git a/tools/xfsdist.bt b/tools/xfsdist.bt
+index 38cff98..0d10752 100755
+--- a/tools/xfsdist.bt
++++ b/tools/xfsdist.bt
+@@ -21,8 +21,8 @@ BEGIN
+ 	printf("Tracing XFS operation latency... Hit Ctrl-C to end.\n");
+ }
+ 
+-kprobe:xfs_file_read_iter,
+-kprobe:xfs_file_write_iter,
++kprobe:xfs_file_aio_read,
++kprobe:xfs_file_aio_write,
+ kprobe:xfs_file_open,
+ kprobe:xfs_file_fsync
+ {
+@@ -30,8 +30,8 @@ kprobe:xfs_file_fsync
+ 	@name[tid] = func;
+ }
+ 
+-kretprobe:xfs_file_read_iter,
+-kretprobe:xfs_file_write_iter,
++kretprobe:xfs_file_aio_read,
++kretprobe:xfs_file_aio_write,
+ kretprobe:xfs_file_open,
+ kretprobe:xfs_file_fsync
+ /@start[tid]/
+-- 
+2.22.0
+

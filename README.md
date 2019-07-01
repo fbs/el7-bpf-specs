@@ -48,7 +48,8 @@ Currently unpatched and barely tested. Some of the tools won't works
 | vfscount.bt       | :white_check_mark:           |
 | vfsstat.bt        | :white_check_mark:           |
 | writeback.bt      | :white_check_mark:           |
-| xfsdist.bt        | :ballot_box_with_check:|
+| xfsdist.bt        | :white_check_mark:           |
+| ext4dist.bt       | :new:                        |
 
 # Building
 

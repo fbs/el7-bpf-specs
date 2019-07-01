@@ -24,6 +24,7 @@ URL:            https://github.com/iovisor/bpftrace
 Source0:        %{url}/archive/v%{version}.tar.gz
 Patch0:         0001-build-EL7-support.patch
 Patch1:         0001-Patch-tools-for-EL7.patch
+Patch2:         0001-tools-ext4dist-based-on-xfsdist.patch
 %if %{with static}
 Patch100:       0001-build-Force-disable-optimization.patch
 %endif
