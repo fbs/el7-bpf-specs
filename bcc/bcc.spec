@@ -20,6 +20,7 @@ BuildRequires:  ncurses-devel
 BuildRequires:  make
 BuildRequires:  devtoolset-7-toolchain
 BuildRequires:  ebpftoolsbuilder-llvm-clang
+BuildRequires:  git
 
 Requires:       %{name}-tools = %{version}-%{release}
 Requires:       kernel-devel
