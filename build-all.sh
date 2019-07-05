@@ -1,5 +1,25 @@
 #!/bin/bash
 
+function cleanup() {
+    docker stop "${CTID}"
+    docker rm "${CTID}"
+}
+
+function build() {
+    CTID="$1"
+    tool="$2"
+    buildopts="$@"
+    echo "Building $tool"
+    docker cp "${tool}/${tool}.spec" "$CTID:/root/"
+    for p in "${tool}"/*.patch; do
+        docker cp "$p" "${CTID}:/root/rpmbuild/SOURCES"
+    done || true
+    docker exec "$CTID" spectool -g -R "/root/${tool}.spec"
+    docker exec "$CTID" yum-builddep -y "/root/${tool}.spec"
+    docker exec "$CTID" rpmbuild -bb "/root/${tool}.spec" $buildopts
+}
+
+
 if [ $EUID -ne 0 ]; then
     >&2 echo "requires root"
     exit 1
@@ -8,7 +28,7 @@ fi
 TAG=""
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --builder-tag)
+        --image-tag)
             TAG=$2
             shift
             ;;
@@ -26,25 +46,6 @@ if [ -z $TAG ]; then
     echo "Builder tag: $TAG"
 fi
 
-function cleanup() {
-    docker cp "${CTID}:/root/rpmbuild/RPMS" .
-    docker stop "${CTID}"
-    docker rm "${CTID}"
-}
-
-function build() {
-    CTID="$1"
-    tool="$2"
-    echo "Building $tool"
-    docker cp "${tool}/${tool}.spec" "$CTID:/root/"
-    for p in "${tool}/*.patch"; do
-        docker cp "$p" "${CTID}:/root/rpmbuild/SOURCES"
-    done || true
-    docker exec "$CTID" spectool -g -R "/root/${tool}.spec"
-    docker exec "$CTID" yum-builddep -y "/root/${tool}.spec"
-    docker exec "$CTID" rpmbuild -bb "/root/${tool}.spec"
-}
-
 echo "Using $TAG as base"
 CTID=$(docker create -t "$TAG")
 if [ $? -ne 0 ]; then
@@ -53,8 +54,17 @@ if [ $? -ne 0 ]; then
 fi
 
 docker start "$CTID"
-docker exec "$CTID" yum install -y gcc
+docker exec -i "$CTID" yum install -y gcc
 build "${CTID}" "bpftool"
 build "${CTID}" "bcc"
+
+docker exec -i "${CTID}" find /root/rpmbuild/RPMS/ -name '*bcc*.rpm' -exec yum install -y {} +
 build "${CTID}" "bpftrace"
+build "${CTID}" "bpftrace" "--with static"
+
+docker cp "${CTID}:/root/rpmbuild/RPMS" .
 cleanup
+echo "##############################################"
+echo "Finished:"
+echo "Builder Image: ${TAG}"
+echo "RPMs can be found in: $(readlink -f RPMS)"

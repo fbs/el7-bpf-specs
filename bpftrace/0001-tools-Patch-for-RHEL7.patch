@@ -1,7 +1,7 @@
 From ffbc70d74b0f95a0509459d5be3ecfe520edb4fe Mon Sep 17 00:00:00 2001
 From: bas smit <bsmit@hostnet.nl>
 Date: Sun, 30 Jun 2019 12:41:22 +0200
-Subject: [PATCH] tools: Patch for RHEL7
+Subject: [PATCH 4/4] tools: Patch for RHEL7
 
 ---
  tools/execsnoop.bt      |  5 +++--

@@ -1,7 +1,7 @@
 From a250366ef7c6c7d30ce663c9e30939cafe86977c Mon Sep 17 00:00:00 2001
 From: bas smit <bsmit@hostnet.nl>
 Date: Sun, 30 Jun 2019 21:01:54 +0200
-Subject: [PATCH] build: Force disable optimization
+Subject: [PATCH 2/4] build: Force disable optimization
 
 For some reason the static build breaks with optimization enabled, the
 struct parsing step:

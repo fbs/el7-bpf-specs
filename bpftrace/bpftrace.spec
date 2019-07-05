@@ -23,13 +23,16 @@ License:        ASL 2.0
 URL:            https://github.com/iovisor/bpftrace
 Source0:        %{url}/archive/v%{version}.tar.gz
 Patch0:         0001-build-EL7-support.patch
-Patch1:         0001-Patch-tools-for-EL7.patch
-Patch2:         0001-tools-ext4dist-based-on-xfsdist.patch
+Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
+Patch2:         0001-tools-Patch-for-RHEL7.patch
+
+
 %if %{with static}
 Patch100:       0001-build-Force-disable-optimization.patch
 %endif
 
 ExclusiveArch:  x86_64
+
 
 BuildRequires:  bison
 BuildRequires:  flex
@@ -37,15 +40,15 @@ BuildRequires:  cmake3
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  zlib-devel
 BuildRequires:  devtoolset-7-gcc-c++
+BuildRequires:  ebpftoolsbuilder-llvm-clang-libs
+
+# For static:
 BuildRequires:  bcc-devel
-%if %{with static}
 BuildRequires:  bcc-static
 BuildRequires:  glibc-static
 BuildRequires:  ncurses-static
 BuildRequires:  elfutils-libelf-devel-static
-%else
-BuildRequires:  ebpftoolsbuilder-llvm-clang-libs
-%endif
+BuildRequires:  ebpftoolsbuilder-llvm-clang
 
 Requires:       kernel-devel
 

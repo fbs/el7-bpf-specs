@@ -1,7 +1,7 @@
 From fc9fd1f658b30fdbf141e5b63e5450b517841c2e Mon Sep 17 00:00:00 2001
 From: bas smit <bsmit@hostnet.nl>
 Date: Sun, 30 Jun 2019 12:39:26 +0200
-Subject: [PATCH] build: EL7 support
+Subject: [PATCH 1/4] build: EL7 support
 
 ---
  cmake/FindLibBcc.cmake | 5 ++++-

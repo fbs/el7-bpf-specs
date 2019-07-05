@@ -1,7 +1,7 @@
 From d856eb3eebe94c896aaeb535893df6ab676cddae Mon Sep 17 00:00:00 2001
 From: bas smit <bsmit@hostnet.nl>
 Date: Mon, 1 Jul 2019 23:52:44 +0200
-Subject: [PATCH] tools: ext4dist based on xfsdist
+Subject: [PATCH 3/4] tools: ext4dist based on xfsdist
 
 ---
  tools/ext4dist.bt | 49 +++++++++++++++++++++++++++++++++++++++++++++++
