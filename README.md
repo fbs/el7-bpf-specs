@@ -15,9 +15,11 @@ Available tools:
 
 # BCC
 
-Currently unpatched and barely tested. Some of the tools won't works
+Currently unpatched and barely tested. Some of the tools won't work
 
 # bpftrace
+
+Tools:
 
 | Tool              | Status                       |
 |-------------------|------------------------------|
@@ -51,14 +53,30 @@ Currently unpatched and barely tested. Some of the tools won't works
 | xfsdist.bt        | :white_check_mark:           |
 | ext4dist.bt       | :new:                        |
 
+Unsupported builtins:
+
+- cgroupid
+
+
 # Building
 
 **Some builds are done with GCC from `devtoolset-7` from software collections
-provide a modern GCC**
+provide a modern GCC*
+
+`build-all.sh` builds all tools in a docker container and exports the RPMs at
+the end. It starts of by building LLVM and Clang and creating a "builder" image
+with that, using that image it will build the other RPMs.
+As building LLVM & Clang takes a while the process can be sped up by reusing an
+earlier built image using the `--image-tag` flag
+
+Alternatively you can build the spec files manually:
 
 The first step is to build `llvm-clang` to provide a somewhat modern LLVM &
-Clang, and to provide static libs.
+Clang, and to provide static libs. Make sure you install the generated rpms
+before you go on the next step.
 
-After that bcc and then bpftrace can be built.
+After that bcc and then bpftrace can be built, bpftrace depends on bcc so make
+sure you install the version you just compiled. Although it also seems to work
+with the version currently shipped with CentOS 7.
 
 bpftool is stand alone.
