@@ -1,8 +1,10 @@
 #!/bin/bash
 
 function cleanup() {
-    docker stop "${CTID}"
-    docker rm "${CTID}"
+    echo "Stopping container..."
+    docker stop "${CTID}" >/dev/null
+    echo "Removing container..."
+    docker rm "${CTID}" >/dev/null
 }
 
 function build() {
