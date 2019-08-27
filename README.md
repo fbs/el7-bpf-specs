@@ -53,10 +53,139 @@ Tools:
 | xfsdist.bt        | :white_check_mark:           |
 | ext4dist.bt       | :new:                        |
 
+
+Tools marked with an :white_check_mark: have been "tested", the tool runs and
+the output appears valid, but no indepth testing has been done. :x: indicate
+tools that are known to be broken and those marked with :question: have not been
+tested at all.
+
+
 Unsupported builtins:
 
 - cgroupid
 
+# BCC
+
+Tools:
+
+| Tools          | Status             |
+|----------------|--------------------|
+| argdist        | :question:         |
+| bashreadline   | :white_check_mark: |
+| biolatency     | :white_check_mark: |
+| biosnoop       | :white_check_mark: |
+| biotop         | :white_check_mark: |
+| bitesize       | :question:         |
+| bpflist        | :white_check_mark: |
+| btrfsdist      | :question:         |
+| btrfsslower    | :question:         |
+| cachestat      | :white_check_mark: |
+| cachetop       | :white_check_mark: |
+| capable        | :question:         |
+| cobjnew        | :question:         |
+| cpudist        | :question:         |
+| cpuunclaimed   | :question:         |
+| criticalstat   | :question:         |
+| dbslower       | :question:         |
+| dbstat         | :question:         |
+| dcsnoop        | :question:         |
+| dcstat         | :question:         |
+| deadlock       | :question:         |
+| drsnoop        | :question:         |
+| execsnoop      | :question:         |
+| exitsnoop      | :question:         |
+| ext4dist       | :question:         |
+| ext4slower     | :question:         |
+| filelife       | :question:         |
+| fileslower     | :question:         |
+| filetop        | :question:         |
+| funccount      | :question:         |
+| funclatency    | :question:         |
+| funcslower     | :question:         |
+| gethostlatency | :question:         |
+| hardirqs       | :question:         |
+| inject         | :question:         |
+| javacalls      | :question:         |
+| javaflow       | :question:         |
+| javagc         | :question:         |
+| javaobjnew     | :question:         |
+| javastat       | :question:         |
+| javathreads    | :question:         |
+| killsnoop      | :question:         |
+| llcstat        | :question:         |
+| mdflush        | :question:         |
+| memleak        | :question:         |
+| mountsnoop     | :question:         |
+| mysqld_qslower | :question:         |
+| nfsdist        | :question:         |
+| nfsslower      | :question:         |
+| nodegc         | :question:         |
+| nodestat       | :question:         |
+| offcputime     | :question:         |
+| offwaketime    | :question:         |
+| oomkill        | :question:         |
+| opensnoop      | :question:         |
+| perlcalls      | :question:         |
+| perlflow       | :question:         |
+| perlstat       | :question:         |
+| phpcalls       | :question:         |
+| phpflow        | :question:         |
+| phpstat        | :question:         |
+| pidpersec      | :question:         |
+| profile        | :question:         |
+| pythoncalls    | :question:         |
+| pythonflow     | :question:         |
+| pythongc       | :question:         |
+| pythonstat     | :question:         |
+| reset-trace    | :question:         |
+| rubycalls      | :question:         |
+| rubyflow       | :question:         |
+| rubygc         | :question:         |
+| rubyobjnew     | :question:         |
+| rubystat       | :question:         |
+| runqlat        | :question:         |
+| runqlen        | :question:         |
+| runqslower     | :question:         |
+| shmsnoop       | :question:         |
+| slabratetop    | :question:         |
+| sofdsnoop      | :question:         |
+| softirqs       | :question:         |
+| solisten       | :question:         |
+| sslsniff       | :question:         |
+| stackcount     | :question:         |
+| statsnoop      | :question:         |
+| syncsnoop      | :question:         |
+| syscount       | :question:         |
+| tclcalls       | :question:         |
+| tclflow        | :question:         |
+| tclobjnew      | :question:         |
+| tclstat        | :question:         |
+| tcpaccept      | :question:         |
+| tcpconnect     | :white_check_mark: |
+| tcpconnlat     | :white_check_mark:         |
+| tcpdrop        | :white_check_mark:         |
+| tcplife        | :question:         |
+| tcpretrans     | :question:         |
+| tcpstates      | :question:         |
+| tcpsubnet      | :question:         |
+| tcptop         | :question:         |
+| tcptracer      | :question:         |
+| tplist         | :question:         |
+| trace          | :question:         |
+| ttysnoop       | :white_check_mark: |
+| vfscount       | :question:         |
+| vfsstat        | :question:         |
+| wakeuptime     | :question:         |
+| xfsdist        | :question:         |
+| xfsslower      | :question:         |
+| zfsdist        | :question:         |
+| zfsslower      | :question:         |
+
+
+Tools marked with an :white_check_mark: have been "tested", the tool runs and
+the output appears valid, but no indepth testing has been done. :x: indicate
+tools that are known to be broken and those marked with :question: have not been
+tested at all.
 
 # Building
 
