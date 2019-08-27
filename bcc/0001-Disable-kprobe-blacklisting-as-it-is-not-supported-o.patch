@@ -1,0 +1,33 @@
+From 6763c2e6bc6e213953bcef339fbf1f7f68f7397e Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Tue, 27 Aug 2019 07:32:14 +0200
+Subject: [PATCH] Disable kprobe blacklisting as it is not supported on centos
+ 7
+
+---
+ src/python/bcc/__init__.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/src/python/bcc/__init__.py b/src/python/bcc/__init__.py
+index bff5f282..cb299e3c 100644
+--- a/src/python/bcc/__init__.py
++++ b/src/python/bcc/__init__.py
+@@ -525,8 +525,13 @@ class BPF(object):
+ 
+     @staticmethod
+     def get_kprobe_functions(event_re):
+-        with open("%s/../kprobes/blacklist" % TRACEFS, "rb") as blacklist_f:
+-            blacklist = set([line.rstrip().split()[1] for line in blacklist_f])
++        blacklist = set()
++        try:
++            with open("%s/../kprobes/blacklist" % TRACEFS, "rb") as blacklist_f:
++                blacklist = set([line.rstrip().split()[1] for line in blacklist_f])
++        except IOError:
++            # Dir does not exist on EL7, just skip it
++            pass
+         fns = []
+ 
+         in_init_section = 0
+-- 
+2.22.0
+
