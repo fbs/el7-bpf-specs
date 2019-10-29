@@ -1,6 +1,9 @@
 %bcond_with static
+%bcond_with git
 
 %global pkgname bpftrace
+
+%define commitid a0b8722
 
 %if %{with static}
 # The static build is a bit of a hack and
@@ -16,7 +19,11 @@
 
 Name:           %{pkgname}%{?with_static:-static}
 Version:        0.9.2
-Release:        0%{?dist}
+%if %{with git}
+Release:        1.%{commitid}%{?dist}
+%else
+Release:        1%{?dist}
+%endif
 Summary:        High-level tracing language for Linux eBPF
 License:        ASL 2.0
 
@@ -25,7 +32,9 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 Patch0:         0001-build-EL7-support.patch
 Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
 Patch2:         0001-tools-Patch-for-RHEL7.patch
+%if !%{with git}
 Patch3:         0001-fix-designated-initializers-build-errors-847.patch
+%endif
 
 
 %if %{with static}
@@ -82,7 +91,23 @@ BPFtrace documentation
 %endif
 
 %prep
+
+%if %{with git}
+git clone %{url} bpftrace
+cd bpftrace
+git checkout %{commitid}
+
+%setup -n bpftrace -D -T
+
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%if %{with static}
+%patch100 -p1
+%endif
+%else
 %autosetup -p1 -n bpftrace-%{version}
+%endif
 
 %build
 . /opt/rh/devtoolset-7/enable
