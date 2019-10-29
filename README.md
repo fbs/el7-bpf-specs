@@ -190,7 +190,7 @@ tested at all.
 # Building
 
 **Some builds are done with GCC from `devtoolset-7` from software collections
-provide a modern GCC*
+to provide a modern GCC*
 
 `build-all.sh` builds all tools in a docker container and exports the RPMs at
 the end. It starts of by building LLVM and Clang and creating a "builder" image
