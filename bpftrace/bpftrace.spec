@@ -56,6 +56,7 @@ BuildRequires:  ebpftoolsbuilder-llvm-clang-libs
 BuildRequires:  bcc-devel
 BuildRequires:  bcc-static
 BuildRequires:  glibc-static
+BuildRequires:  zlib-static
 BuildRequires:  ncurses-static
 BuildRequires:  elfutils-libelf-devel-static
 BuildRequires:  ebpftoolsbuilder-llvm-clang
