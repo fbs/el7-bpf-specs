@@ -1,6 +1,6 @@
 Name:           bcc
-Version:        0.10.0
-Release:        3%{?dist}
+Version:        0.11.0
+Release:        1%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -177,6 +177,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Mon Oct 28 2019 bas smit <bas@baslab.org> - 0.11.0-1
+- Bump to bcc 0.11
+
 * Sat Jun 29 2019 bas smit <bas@baslab.org> - 0.10.0-2
 - Adept for EL7
 
