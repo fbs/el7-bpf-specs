@@ -3,7 +3,7 @@
 
 %global pkgname bpftrace
 
-%define commitid a0b8722
+%define commitid 7cf196c
 
 %if %{with static}
 # The static build is a bit of a hack and
@@ -20,7 +20,7 @@
 Name:           %{pkgname}%{?with_static:-static}
 Version:        0.9.2
 %if %{with git}
-Release:        1.%{commitid}%{?dist}
+Release:        2.%{commitid}%{?dist}
 %else
 Release:        1%{?dist}
 %endif
