@@ -39,6 +39,7 @@ Patch3:         0001-fix-designated-initializers-build-errors-847.patch
 
 %if %{with static}
 Patch100:       0001-build-Force-disable-optimization.patch
+Patch101:       0001-Add-lib-iberty-dependency-for-static-builds.patch
 %endif
 
 ExclusiveArch:  x86_64
@@ -108,6 +109,7 @@ git checkout %{commitid}
 %patch2 -p1
 %if %{with static}
 %patch100 -p1
+%patch101 -p1
 %endif
 %else
 %autosetup -p1 -n bpftrace-%{version}
