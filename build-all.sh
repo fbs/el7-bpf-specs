@@ -19,8 +19,9 @@ function build() {
     docker exec "$CTID" spectool -g -R "/root/${tool}.spec"
     docker exec "$CTID" yum-builddep -y "/root/${tool}.spec"
     docker exec "$CTID" rpmbuild -bb "/root/${tool}.spec" $buildopts
+    docker exec "$CTID" rm -rf /root/rpmbuild/BUILD
+    docker exec "$CTID" mkdir /root/rpmbuild/BUILD
 }
-
 
 if [ $EUID -ne 0 ]; then
     >&2 echo "requires root"
@@ -63,6 +64,8 @@ build "${CTID}" "bcc"
 docker exec -i "${CTID}" find /root/rpmbuild/RPMS/ -name '*bcc*.rpm' -exec yum install -y {} +
 build "${CTID}" "bpftrace"
 build "${CTID}" "bpftrace" "--with static"
+build "${CTID}" "bpftrace" "--with git"
+build "${CTID}" "bpftrace" "--with git" "--with static"
 
 docker cp "${CTID}:/root/rpmbuild/RPMS" .
 cleanup
