@@ -1,7 +1,6 @@
 # ebpf-specs
 
-**Satus: Usable but still WIP. Might rename some stuff and some tools need
-patching still**
+**Status: Stable**
 
 A collection of rpm specs to build eBPF related tools on Centos 7. All tools are
 available as static binaries to remove the potential runtime dependencies on the
@@ -13,9 +12,15 @@ Available tools:
 - [bpftrace](https://github.com/iovisor/bpftrace)
 - [bpftool](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/tools/bpf/bpftool)
 
-# BCC
+## Repository
 
-Currently unpatched and barely tested. Some of the tools won't work
+Repository available at https://repos.baslab.org/bpftools/
+
+Install:
+
+```
+curl https://repos.baslab.org/bpftools.repo --output /etc/yum.repos.d/bpftools.repo
+```
 
 # bpftrace
 
@@ -58,7 +63,6 @@ Tools marked with an :white_check_mark: have been "tested", the tool runs and
 the output appears valid, but no indepth testing has been done. :x: indicate
 tools that are known to be broken and those marked with :question: have not been
 tested at all.
-
 
 Unsupported builtins:
 
