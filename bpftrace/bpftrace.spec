@@ -60,8 +60,10 @@ BuildRequires:  zlib-static
 BuildRequires:  ncurses-static
 BuildRequires:  elfutils-libelf-devel-static
 BuildRequires:  ebpftoolsbuilder-llvm-clang
+BuildRequires:  binutils-devel
 
 Requires:       kernel-devel
+Requires:       binutils
 
 Conflicts: bpftrace%{!?with_static:-static}
 
