@@ -96,6 +96,7 @@ BPFtrace documentation
 %prep
 
 %if %{with git}
+rm -rf bpftrace
 git clone %{url} bpftrace
 cd bpftrace
 git checkout %{commitid}
