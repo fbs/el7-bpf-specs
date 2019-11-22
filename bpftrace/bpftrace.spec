@@ -18,9 +18,9 @@
 %endif
 
 Name:           %{pkgname}%{?with_static:-static}
-Version:        0.9.2
+Version:        0.9.3
 %if %{with git}
-Release:        2.%{commitid}%{?dist}
+Release:        1.%{commitid}%{?dist}
 %else
 Release:        1%{?dist}
 %endif
@@ -32,10 +32,6 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 Patch0:         0001-build-EL7-support.patch
 Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
 Patch2:         0001-tools-Patch-for-RHEL7.patch
-%if !%{with git}
-Patch3:         0001-fix-designated-initializers-build-errors-847.patch
-%endif
-
 
 %if %{with static}
 Patch100:       0001-build-Force-disable-optimization.patch
@@ -161,6 +157,9 @@ mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
 
 
 %changelog
+* Thu Nov 22 2019 bas smit - 0.9.3
+- 0.9.3 release!
+
 * Thu Nov 7 2019 bas smit - 0.9.2
 - Update to latest release
 
