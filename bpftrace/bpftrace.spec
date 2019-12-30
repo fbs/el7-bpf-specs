@@ -3,7 +3,7 @@
 
 %global pkgname bpftrace
 
-%define commitid 8c1d4e9
+%define commitid 46e62c0
 
 %if %{with static}
 # The static build is a bit of a hack and
