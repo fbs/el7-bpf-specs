@@ -20,7 +20,12 @@ Install:
 
 ```
 curl https://repos.baslab.org/bpftools.repo --output /etc/yum.repos.d/bpftools.repo
+yum install bpftrace-static bpftrace-tools bpftrace-docs bcc-static bcc-tools
 ```
+
+Installing the `-static` versions is recommended as the LLVM packages are
+terrible.
+
 
 # bpftrace
 
