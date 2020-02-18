@@ -157,7 +157,7 @@ mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
 
 
 %changelog
-* Thu Nov 22 2019 bas smit - 0.9.3
+* Fri Nov 22 2019 bas smit - 0.9.3
 - 0.9.3 release!
 
 * Thu Nov 7 2019 bas smit - 0.9.2
