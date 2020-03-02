@@ -1,6 +1,6 @@
 Name:           bcc
 Version:        0.12.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -19,7 +19,7 @@ BuildRequires:  python-devel
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  ncurses-devel
 BuildRequires:  make
-BuildRequires:  devtoolset-7-toolchain
+BuildRequires:  devtoolset-8-toolchain
 BuildRequires:  ebpftoolsbuilder-llvm-clang
 BuildRequires:  git
 
@@ -98,7 +98,7 @@ cd bcc
 
 %build
 
-. /opt/rh/devtoolset-7/enable
+. /opt/rh/devtoolset-8/enable
 cd bcc
 %cmake3 . \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -176,6 +176,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Tue Mar 3 2020 bas smit <bas@baslab.org> - 0.12.0-2
+- Build with devtoolset-8
+
 * Tue Feb 18 2020 bas smit <bas@baslab.org> - 0.12.0-1
 - Bump to bcc 0.12
 

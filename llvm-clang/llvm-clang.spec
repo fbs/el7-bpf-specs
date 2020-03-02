@@ -5,7 +5,7 @@
 
 Name:     ebpftoolsbuilder-llvm-clang
 Version:	%{maj_ver}.%{min_ver}.%{patch_ver}
-Release:  0%{?dist}
+Release:  2%{?dist}
 Summary:	The Low Level Virtual Machine
 License:	NCSA
 URL:		  http://llvm.org
@@ -22,7 +22,7 @@ BuildRequires:  flex
 BuildRequires:  make
 BuildRequires:  libxml2-devel
 BuildRequires:  elfutils-libelf-devel
-BuildRequires:  devtoolset-7-toolchain
+BuildRequires:  devtoolset-8-toolchain
 
 %description
 A build of LLVM and Clang to make bpftrace and BCC possible on
@@ -43,7 +43,7 @@ mkdir build
 
 %build
 
-. /opt/rh/devtoolset-7/enable
+. /opt/rh/devtoolset-8/enable
 cd build
 
 cmake3 .. \
@@ -111,5 +111,8 @@ rm %{buildroot}%{_bindir}/c-index-test
 %{_libdir}/libclang.so*
 
 %changelog
-* Sun Jun 30 2019 bas smit - 0.9.1
+* Tue Mar 3 2020 bas smit - 0.9.1
+- Build with devtoolset-8
+
+* Sun Jun 30 2019 bas smit - 0.8.1
 - Initial version

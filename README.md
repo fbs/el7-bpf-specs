@@ -198,7 +198,7 @@ tested at all.
 
 # Building
 
-**Some builds are done with GCC from `devtoolset-7` from software collections
+**Some builds are done with GCC from `devtoolset-8` from software collections
 to provide a modern GCC*
 
 `build-all.sh` builds all tools in a docker container and exports the RPMs at
