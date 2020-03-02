@@ -26,23 +26,24 @@ libclang: crash detected during parsing: {
 6  0x00000000027a36f5 in start_thread ()
 7  0x00000000029202d9 in clone ()
 ```
+
 ---
  CMakeLists.txt | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a626fbc..dcac32d 100644
+index b766669..789abe1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -25,6 +25,8 @@ add_compile_options("-Wunreachable-code")
+@@ -52,6 +52,8 @@ add_compile_options("-Wswitch-default")
+ add_compile_options("-Wunreachable-code")
  #add_compile_options("-Wformat=2")
- add_compile_options("-Wstrict-overflow=5")
  add_compile_options("-Wdisabled-optimization")
 +add_compile_options("-O0")
 +add_compile_options("-Wno-cpp")
- 
- include(CTest)
- 
--- 
+
+ if (WARNINGS_AS_ERRORS)
+   add_compile_options("-Werror")
+--
 2.22.0
 

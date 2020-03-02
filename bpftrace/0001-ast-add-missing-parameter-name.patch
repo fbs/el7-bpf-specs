@@ -1,0 +1,25 @@
+From f156a0fb4cd6e89154b0bf0bf7511ae6b037221f Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Mon, 2 Mar 2020 17:55:27 +0100
+Subject: [PATCH] ast: add missing parameter name
+
+---
+ src/ast/ast.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ast/ast.cpp b/src/ast/ast.cpp
+index e99e0cc..6d53007 100644
+--- a/src/ast/ast.cpp
++++ b/src/ast/ast.cpp
+@@ -184,7 +184,7 @@ Unop::Unop(int op, Expression *expr, location loc)
+ {
+ }
+ 
+-Unop::Unop(int op, Expression *expr, bool is_post_op, location)
++Unop::Unop(int op, Expression *expr, bool is_post_op, location loc)
+     : Expression(loc), expr(expr), op(op), is_post_op(is_post_op)
+ {
+ }
+-- 
+2.25.0
+

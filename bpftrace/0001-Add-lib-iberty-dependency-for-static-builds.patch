@@ -1,6 +1,6 @@
-From e84e551975e4922ef498c6cc369a18c60becc6fc Mon Sep 17 00:00:00 2001
+From a14932640b6d317c6c228822d0399778409ded0c Mon Sep 17 00:00:00 2001
 From: bas smit <bas@baslab.org>
-Date: Thu, 7 Nov 2019 20:30:06 +0100
+Date: Mon, 2 Mar 2020 16:18:08 +0100
 Subject: [PATCH] Add lib iberty dependency for static builds
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH] Add lib iberty dependency for static builds
  1 file changed, 3 insertions(+)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 65f3a34..ddb55b3 100644
+index be18122..7d0076b 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -62,6 +62,9 @@ if (STATIC_LINKING)
+@@ -74,6 +74,9 @@ if(STATIC_LINKING)
    target_link_libraries(bpftrace ${LIBBCC_LIBRARIES})
    target_link_libraries(bpftrace ${LIBBPF_LIBRARY_STATIC})
    target_link_libraries(bpftrace ${LIBBCC_LOADER_LIBRARY_STATIC})
 +  if(HAVE_BFD_DISASM)
 +    target_link_libraries(bpftrace -liberty)
 +  endif(HAVE_BFD_DISASM)
- else()
-   target_link_libraries(bpftrace ${LIBBCC_LIBRARIES})
- endif()
+ 
+   add_library(LIBELF STATIC IMPORTED)
+   set_property(TARGET LIBELF PROPERTY IMPORTED_LOCATION ${LIBELF_LIBRARIES})
 -- 
-2.23.0
+2.25.0
 
