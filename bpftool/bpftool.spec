@@ -1,18 +1,18 @@
 Name: bpftool
-Version: 5.1.15
-Release: 0%{?dist}
+Version: 5.5.7
+Release: 1%{?dist}
 Summary: Inspection and simple manipulation of eBPF programs and maps
 License: GPLv2
 URL: http://www.kernel.org/
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{version}.tar.xz
-Patch0: 0001-build-static.patch
 
-BuildRequires: elfutils-libelf-devel-static
-BuildRequires: zlib-static
+BuildRequires: elfutils-libelf-devel
+BuildRequires: zlib
 BuildRequires: gcc
 BuildRequires: make
-BuildRequires: glibc-static
+BuildRequires: glibc-devel
 BuildRequires: python-docutils
+BuildRequires: binutils-devel
 
 %description
 This package contains the bpftool, which allows inspection and simple
@@ -44,6 +44,8 @@ mv %{buildroot}/usr/man %{buildroot}%{_mandir}
 %{_mandir}
 
 %changelog
+* Mon Mar 2 2020 bas smit - 5.5.7-1
+Bump version, disable static
 
 * Mon Jul 1 2019 bas smit - 0.0.1
 - Initial version
