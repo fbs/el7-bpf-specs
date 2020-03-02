@@ -20,9 +20,9 @@
 Name:           %{pkgname}%{?with_static:-static}
 Version:        0.9.4
 %if %{with git}
-Release:        1.%{commitid}%{?dist}
+Release:        2.%{commitid}%{?dist}
 %else
-Release:        1%{?dist}
+Release:        2%{?dist}
 %endif
 Summary:        High-level tracing language for Linux eBPF
 License:        ASL 2.0
@@ -50,7 +50,7 @@ BuildRequires:  flex
 BuildRequires:  cmake3
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  zlib-devel
-BuildRequires:  devtoolset-7-gcc-c++
+BuildRequires:  devtoolset-8-gcc-c++
 BuildRequires:  ebpftoolsbuilder-llvm-clang-libs
 
 # For static:
@@ -116,7 +116,7 @@ git checkout %{commitid}
 %endif
 
 %build
-. /opt/rh/devtoolset-7/enable
+. /opt/rh/devtoolset-8/enable
 %cmake3 . \
   -DCMAKE_BUILD_TYPE=Debug \
   -DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -164,6 +164,9 @@ mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
 
 
 %changelog
+* Tue Mar 3 2020 bas smit - 0.9.4-2
+- Build with devtoolset-8
+
 * Tue Feb 18 2020 bas smit - 0.9.4-1
 - 0.9.4 release!
 
