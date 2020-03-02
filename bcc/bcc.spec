@@ -1,5 +1,5 @@
 Name:           bcc
-Version:        0.11.0
+Version:        0.12.0
 Release:        1%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
@@ -177,6 +177,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Tue Feb 18 2020 bas smit <bas@baslab.org> - 0.12.0-1
+- Bump to bcc 0.12
+
 * Mon Oct 28 2019 bas smit <bas@baslab.org> - 0.11.0-1
 - Bump to bcc 0.11
 

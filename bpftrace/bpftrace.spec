@@ -3,7 +3,7 @@
 
 %global pkgname bpftrace
 
-%define commitid 46e62c0
+%define commitid f156a0f
 
 %if %{with static}
 # The static build is a bit of a hack and
@@ -18,7 +18,7 @@
 %endif
 
 Name:           %{pkgname}%{?with_static:-static}
-Version:        0.9.3
+Version:        0.9.4
 %if %{with git}
 Release:        1.%{commitid}%{?dist}
 %else
@@ -36,6 +36,10 @@ Patch2:         0001-tools-Patch-for-RHEL7.patch
 %if %{with static}
 Patch100:       0001-build-Force-disable-optimization.patch
 Patch101:       0001-Add-lib-iberty-dependency-for-static-builds.patch
+%endif
+
+%if ! %{with git}
+Patch999:       0001-ast-add-missing-parameter-name.patch
 %endif
 
 ExclusiveArch:  x86_64
@@ -115,13 +119,14 @@ git checkout %{commitid}
 . /opt/rh/devtoolset-7/enable
 %cmake3 . \
   -DCMAKE_BUILD_TYPE=Debug \
-  -DBUILD_TESTING:BOOL=OFF \
   -DBUILD_SHARED_LIBS:BOOL=OFF \
 %if %{with static}
+  -DSTATIC_LIBC=ON \
   -DSTATIC_LINKING=1
 %endif
 
 %make_build
+./tests/bpftrace_test
 
 %install
 %make_install
@@ -130,9 +135,11 @@ git checkout %{commitid}
 find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
   sed -i -e '1s=^#!/usr/bin/env %{pkgname}\([0-9.]\+\)\?$=#!%{_bindir}/%{pkgname}=' {} \;
 
+%if ! %{with git}
 # Move man pages to the right location
 mkdir -p %{buildroot}%{_mandir}
 mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
+%endif
 
 
 %files
@@ -157,6 +164,9 @@ mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
 
 
 %changelog
+* Tue Feb 18 2020 bas smit - 0.9.4-1
+- 0.9.4 release!
+
 * Fri Nov 22 2019 bas smit - 0.9.3
 - 0.9.3 release!
 
