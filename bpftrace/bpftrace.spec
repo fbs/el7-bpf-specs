@@ -3,7 +3,7 @@
 
 %global pkgname bpftrace
 
-%define commitid f156a0f
+%define commitid 1b2707a
 
 %if %{with static}
 # The static build is a bit of a hack and
@@ -18,11 +18,11 @@
 %endif
 
 Name:           %{pkgname}%{?with_static:-static}
-Version:        0.9.4
+Version:        0.10.0
 %if %{with git}
-Release:        2.%{commitid}%{?dist}
+Release:        1.%{commitid}%{?dist}
 %else
-Release:        2%{?dist}
+Release:        1%{?dist}
 %endif
 Summary:        High-level tracing language for Linux eBPF
 License:        ASL 2.0
@@ -38,12 +38,7 @@ Patch100:       0001-build-Force-disable-optimization.patch
 Patch101:       0001-Add-lib-iberty-dependency-for-static-builds.patch
 %endif
 
-%if ! %{with git}
-Patch999:       0001-ast-add-missing-parameter-name.patch
-%endif
-
 ExclusiveArch:  x86_64
-
 
 BuildRequires:  bison
 BuildRequires:  flex
@@ -52,6 +47,7 @@ BuildRequires:  elfutils-libelf-devel
 BuildRequires:  zlib-devel
 BuildRequires:  devtoolset-8-gcc-c++
 BuildRequires:  ebpftoolsbuilder-llvm-clang-libs
+BuildRequires:  binutils-devel
 
 # For static:
 BuildRequires:  bcc-devel
@@ -61,7 +57,6 @@ BuildRequires:  zlib-static
 BuildRequires:  ncurses-static
 BuildRequires:  elfutils-libelf-devel-static
 BuildRequires:  ebpftoolsbuilder-llvm-clang
-BuildRequires:  binutils-devel
 
 Requires:       kernel-devel
 Requires:       binutils
@@ -135,13 +130,6 @@ git checkout %{commitid}
 find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
   sed -i -e '1s=^#!/usr/bin/env %{pkgname}\([0-9.]\+\)\?$=#!%{_bindir}/%{pkgname}=' {} \;
 
-%if ! %{with git}
-# Move man pages to the right location
-mkdir -p %{buildroot}%{_mandir}
-mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
-%endif
-
-
 %files
 %license LICENSE
 %{_bindir}/%{pkgname}
@@ -164,6 +152,9 @@ mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}/
 
 
 %changelog
+* Tue Apr 14 2020 bas smit - 0.10.0-1
+- 0.10.0 release
+
 * Tue Mar 3 2020 bas smit - 0.9.4-2
 - Build with devtoolset-8
 
