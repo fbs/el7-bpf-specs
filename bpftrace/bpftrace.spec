@@ -1,5 +1,7 @@
 %global pkgname bpftrace
 
+%define commitid f2a6bde
+
 # The static build is a bit of a hack and
 # doesn't build th docs and tools package
 # so ignore other files
@@ -27,7 +29,8 @@ Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
 Patch2:         0001-tools-Patch-for-RHEL7.patch
 
 Patch100:       0001-build-Force-disable-optimization.patch
-Patch101:       0001-Add-lib-iberty-dependency-for-static-builds.patch
+Patch101:       0001-Do-not-require-libbpf-for-static-build.patch
+
 
 ExclusiveArch:  x86_64
 
@@ -103,7 +106,7 @@ git checkout %{commitid}
   -DSTATIC_LINKING=1
 
 %make_build
-./tests/bpftrace_test
+./tests/bpftrace_test --gtest_filter='*:-procmon.*'
 
 %install
 %make_install
