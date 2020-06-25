@@ -1,5 +1,5 @@
 Name:           bcc
-Version:        0.12.0
+Version:        0.15.0
 Release:        2%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
@@ -7,7 +7,6 @@ URL:            https://github.com/iovisor/bcc
 # Generate source tarball until upstream bug is fixed
 # See https://github.com/iovisor/bcc/issues/2261
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch0:         0001-Disable-kprobe-blacklisting-as-it-is-not-supported-o.patch
 
 ExclusiveArch:  x86_64
 
@@ -93,8 +92,6 @@ The %{name}-static package contains the static archives for BCC
 rm -rf bcc
 git clone %{url}
 cd bcc
-%patch0 -p1
-
 
 %build
 
@@ -176,6 +173,8 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Tue Jun 25 2020 bas smit <bas@baslab.org> - 0.15.0-1
+- Bump to bcc 0.15
 * Tue Mar 3 2020 bas smit <bas@baslab.org> - 0.12.0-2
 - Build with devtoolset-8
 
