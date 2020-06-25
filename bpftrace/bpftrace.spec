@@ -1,11 +1,5 @@
-%bcond_with static
-%bcond_with git
-
 %global pkgname bpftrace
 
-%define commitid 1b2707a
-
-%if %{with static}
 # The static build is a bit of a hack and
 # doesn't build th docs and tools package
 # so ignore other files
@@ -15,14 +9,13 @@
 # which are needed for the BEGIN and END probes
 %global __os_install_post %{nil}
 %global _find_debuginfo_opts -g
-%endif
 
-Name:           %{pkgname}%{?with_static:-static}
+Name:           %{pkgname}
 Version:        0.10.0
-%if %{with git}
-Release:        1.%{commitid}%{?dist}
+%if "%{?commitid}" != ""
+Release:        2.%{?commitid}%{?dist}
 %else
-Release:        1%{?dist}
+Release:        2%{?dist}
 %endif
 Summary:        High-level tracing language for Linux eBPF
 License:        ASL 2.0
@@ -33,10 +26,8 @@ Patch0:         0001-build-EL7-support.patch
 Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
 Patch2:         0001-tools-Patch-for-RHEL7.patch
 
-%if %{with static}
 Patch100:       0001-build-Force-disable-optimization.patch
 Patch101:       0001-Add-lib-iberty-dependency-for-static-builds.patch
-%endif
 
 ExclusiveArch:  x86_64
 
@@ -61,8 +52,6 @@ BuildRequires:  ebpftoolsbuilder-llvm-clang
 Requires:       kernel-devel
 Requires:       binutils
 
-Conflicts: bpftrace%{!?with_static:-static}
-
 %description
 BPFtrace is a high-level tracing language for Linux enhanced Berkeley Packet
 Filter (eBPF) available in recent Linux kernels (4.x). BPFtrace uses LLVM as a
@@ -72,7 +61,6 @@ capabilities: kernel dynamic tracing (kprobes), user-level dynamic tracing
 (uprobes), and tracepoints. The BPFtrace language is inspired by awk and C,
 and predecessor tracers such as DTrace and SystemTap
 
-%if !%{with static}
 %package tools
 Summary:        Command line tools for BPFtrace
 BuildArch:      noarch
@@ -87,11 +75,9 @@ BuildArch:      noarch
 %description doc
 BPFtrace documentation
 
-%endif
-
 %prep
 
-%if %{with git}
+%if "%{?commitid}" != ""
 rm -rf bpftrace
 git clone %{url} bpftrace
 cd bpftrace
@@ -102,10 +88,8 @@ git checkout %{commitid}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%if %{with static}
 %patch100 -p1
 %patch101 -p1
-%endif
 %else
 %autosetup -p1 -n bpftrace-%{version}
 %endif
@@ -115,10 +99,8 @@ git checkout %{commitid}
 %cmake3 . \
   -DCMAKE_BUILD_TYPE=Debug \
   -DBUILD_SHARED_LIBS:BOOL=OFF \
-%if %{with static}
   -DSTATIC_LIBC=ON \
   -DSTATIC_LINKING=1
-%endif
 
 %make_build
 ./tests/bpftrace_test
@@ -134,7 +116,6 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %license LICENSE
 %{_bindir}/%{pkgname}
 
-%if !%{with static}
 %exclude %{_datadir}
 
 %files doc
@@ -148,10 +129,11 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_mandir}/man8/*
 %attr(0755,-,-) %{_datadir}/%{pkgname}/tools/*.bt
 %{_datadir}/%{pkgname}/tools/doc/*.txt
-%endif
-
 
 %changelog
+* Thu Jun 25 2020 bas smit - 0.10.0-2
+- Builds are now static by default
+
 * Tue Apr 14 2020 bas smit - 0.10.0-1
 - 0.10.0 release
 
