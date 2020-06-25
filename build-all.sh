@@ -10,8 +10,9 @@ function cleanup() {
 function build() {
     CTID="$1"
     tool="$2"
+    shift; shift;
     buildopts="$@"
-    echo "Building $tool"
+    echo "Building $tool $buildopts"
     docker cp "${tool}/${tool}.spec" "$CTID:/root/"
     for p in "${tool}"/*.patch; do
         docker cp "$p" "${CTID}:/root/rpmbuild/SOURCES"
