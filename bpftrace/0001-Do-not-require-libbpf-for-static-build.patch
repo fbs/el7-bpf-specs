@@ -1,0 +1,51 @@
+From a2cffdecd0ae3952f36917710307ed60bd1acbad Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Thu, 25 Jun 2020 17:22:54 +0200
+Subject: [PATCH] Do not require libbpf for static build
+
+---
+ CMakeLists.txt       | 2 +-
+ src/CMakeLists.txt   | 1 -
+ tests/CMakeLists.txt | 1 -
+ 3 files changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4c739585..af7493ff 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -103,7 +103,7 @@ if(POLICY CMP0075)
+   cmake_policy(SET CMP0075 NEW)
+ endif()
+ if(STATIC_LINKING)
+-  set(CMAKE_REQUIRED_LIBRARIES bcc bcc_bpf bpf elf z)
++  set(CMAKE_REQUIRED_LIBRARIES bcc bcc_bpf elf z)
+ else()
+   set(CMAKE_REQUIRED_LIBRARIES bcc)
+ endif(STATIC_LINKING)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 487fa9bc..d82054ae 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -90,7 +90,6 @@ target_link_libraries(bpftrace ${LIBBCC_LIBRARIES})
+ if(STATIC_LINKING)
+   # These are not part of the static libbcc so have to be added separate
+   target_link_libraries(bpftrace ${LIBBCC_BPF_LIBRARY_STATIC})
+-  target_link_libraries(bpftrace ${LIBBPF_LIBRARIES})
+   target_link_libraries(bpftrace ${LIBBCC_LOADER_LIBRARY_STATIC})
+ 
+   add_library(LIBELF STATIC IMPORTED)
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index d660fe73..4f73c1d7 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -111,7 +111,6 @@ if (STATIC_LINKING)
+ 
+   # These are not part of the static libbcc so have to be added separate
+   target_link_libraries(bpftrace_test ${LIBBCC_BPF_LIBRARY_STATIC})
+-  target_link_libraries(bpftrace_test ${LIBBPF_LIBRARIES})
+   target_link_libraries(bpftrace_test ${LIBBCC_LOADER_LIBRARY_STATIC})
+ 
+   add_library(LIBELF STATIC IMPORTED)
+-- 
+2.25.0
+

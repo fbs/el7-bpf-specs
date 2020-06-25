@@ -1,17 +1,17 @@
-From fc9fd1f658b30fdbf141e5b63e5450b517841c2e Mon Sep 17 00:00:00 2001
-From: bas smit <bsmit@hostnet.nl>
-Date: Sun, 30 Jun 2019 12:39:26 +0200
-Subject: [PATCH 1/4] build: EL7 support
+From 6722332168a750bfd295cd44906854669a3fcc68 Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Thu, 25 Jun 2020 16:53:22 +0200
+Subject: [PATCH] build: EL7 support
 
 ---
- cmake/FindLibBcc.cmake | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ cmake/FindLibBcc.cmake | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/cmake/FindLibBcc.cmake b/cmake/FindLibBcc.cmake
-index 921df97..5255666 100644
+index 9d30b04b..6448e3e1 100644
 --- a/cmake/FindLibBcc.cmake
 +++ b/cmake/FindLibBcc.cmake
-@@ -32,6 +32,7 @@ find_library (LIBBCC_LIBRARIES
+@@ -35,6 +35,7 @@ find_library (LIBBCC_LIBRARIES
      bcc
    PATHS
      /usr/lib
@@ -19,19 +19,15 @@ index 921df97..5255666 100644
      /usr/local/lib
      /opt/local/lib
      /sw/lib
-@@ -40,9 +41,10 @@ find_library (LIBBCC_LIBRARIES
- 
- find_library (LIBBPF_LIBRARY_STATIC
-   NAMES
--    bpf
-+    bcc_bpf
+@@ -46,6 +47,7 @@ find_library (LIBBCC_BPF_LIBRARY_STATIC
+     bcc_bpf
    PATHS
      /usr/lib
 +    /usr/lib64
      /usr/local/lib
      /opt/local/lib
      /sw/lib
-@@ -54,6 +56,7 @@ find_library (LIBBCC_LOADER_LIBRARY_STATIC
+@@ -57,6 +59,7 @@ find_library (LIBBCC_LOADER_LIBRARY_STATIC
      bcc-loader-static
    PATHS
      /usr/lib
@@ -40,5 +36,5 @@ index 921df97..5255666 100644
      /opt/local/lib
      /sw/lib
 -- 
-2.22.0
+2.25.0
 
