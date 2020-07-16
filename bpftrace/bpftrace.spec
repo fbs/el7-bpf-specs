@@ -1,7 +1,5 @@
 %global pkgname bpftrace
 
-%define commitid f2a6bde
-
 # The static build is a bit of a hack and
 # doesn't build th docs and tools package
 # so ignore other files
@@ -13,11 +11,11 @@
 %global _find_debuginfo_opts -g
 
 Name:           %{pkgname}
-Version:        0.10.0
+Version:        0.11.0
 %if "%{?commitid}" != ""
-Release:        2.%{?commitid}%{?dist}
+Release:        1.%{?commitid}%{?dist}
 %else
-Release:        2%{?dist}
+Release:        1%{?dist}
 %endif
 Summary:        High-level tracing language for Linux eBPF
 License:        ASL 2.0
@@ -134,6 +132,9 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_datadir}/%{pkgname}/tools/doc/*.txt
 
 %changelog
+* Thu Jul 16 2020 bas smit - 0.11.0-1
+- bpftrace 0.11!
+
 * Thu Jun 25 2020 bas smit - 0.10.0-2
 - Builds are now static by default
 
