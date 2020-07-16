@@ -53,6 +53,8 @@ BuildRequires:  ebpftoolsbuilder-llvm-clang
 Requires:       kernel-devel
 Requires:       binutils
 
+obsoletes:      bpftrace-static
+
 %description
 BPFtrace is a high-level tracing language for Linux enhanced Berkeley Packet
 Filter (eBPF) available in recent Linux kernels (4.x). BPFtrace uses LLVM as a
