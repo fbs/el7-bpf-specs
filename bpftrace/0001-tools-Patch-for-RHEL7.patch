@@ -28,7 +28,7 @@ index 357f09d..a5103f0 100755
 -tracepoint:syscalls:sys_enter_execve
 +kprobe:SyS_execve
  {
- 	printf("%-10u %-5d ", elapsed / 1000000, pid);
+ 	printf("%-10u %-5d ", elapsed / 1e6, pid);
 -	join(args->argv);
 +	join(arg1);
  }
@@ -59,7 +59,7 @@ index a1ac1b2..435b519 100755
 +uretprobe:/usr/lib64/libc.so.6:gethostbyname2
  /@start[tid]/
  {
- 	$latms = (nsecs - @start[tid]) / 1000000;
+ 	$latms = (nsecs - @start[tid]) / 1e6;
 @@ -45,3 +45,4 @@ uretprobe:/lib/x86_64-linux-gnu/libc.so.6:gethostbyname2
  	delete(@start[tid]);
  	delete(@name[tid]);
