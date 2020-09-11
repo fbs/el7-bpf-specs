@@ -1,7 +1,7 @@
-From ffbc70d74b0f95a0509459d5be3ecfe520edb4fe Mon Sep 17 00:00:00 2001
-From: bas smit <bsmit@hostnet.nl>
-Date: Sun, 30 Jun 2019 12:41:22 +0200
-Subject: [PATCH 4/4] tools: Patch for RHEL7
+From d028fd66bb53df24294b9e7d24ce9eef044fc753 Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Fri, 11 Sep 2020 16:03:52 +0200
+Subject: [PATCH] Fix tools
 
 ---
  tools/execsnoop.bt      |  5 +++--
@@ -10,7 +10,7 @@ Subject: [PATCH 4/4] tools: Patch for RHEL7
  3 files changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/tools/execsnoop.bt b/tools/execsnoop.bt
-index 357f09d..a5103f0 100755
+index dd8e98c..08a51b4 100755
 --- a/tools/execsnoop.bt
 +++ b/tools/execsnoop.bt
 @@ -13,6 +13,7 @@
@@ -25,7 +25,7 @@ index 357f09d..a5103f0 100755
  	printf("%-10s %-5s %s\n", "TIME(ms)", "PID", "ARGS");
  }
  
--tracepoint:syscalls:sys_enter_execve
+-tracepoint:syscalls:sys_enter_exec*
 +kprobe:SyS_execve
  {
  	printf("%-10u %-5d ", elapsed / 1e6, pid);
@@ -33,7 +33,7 @@ index 357f09d..a5103f0 100755
 +	join(arg1);
  }
 diff --git a/tools/gethostlatency.bt b/tools/gethostlatency.bt
-index a1ac1b2..435b519 100755
+index 9f4ec31..0e4b3b5 100755
 --- a/tools/gethostlatency.bt
 +++ b/tools/gethostlatency.bt
 @@ -26,17 +26,17 @@ BEGIN
@@ -92,5 +92,5 @@ index 38cff98..0d10752 100755
  kretprobe:xfs_file_fsync
  /@start[tid]/
 -- 
-2.22.0
+2.28.0
 
