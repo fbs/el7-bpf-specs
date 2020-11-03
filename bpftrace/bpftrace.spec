@@ -1,5 +1,5 @@
 %global pkgname bpftrace
-%global commitid f543461
+%global commitid 91b0705
 
 # The static build is a bit of a hack and
 # doesn't build th docs and tools package
@@ -14,7 +14,7 @@
 Name:           %{pkgname}
 Version:        0.11.0
 %if "%{?commitid}" != ""
-Release:        3.%{?commitid}%{?dist}
+Release:        4.%{?commitid}%{?dist}
 %else
 Release:        1%{?dist}
 %endif
@@ -137,8 +137,11 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_datadir}/%{pkgname}/tools/doc/*.txt
 
 %changelog
+* Tue Nov 3 2020 bas smit - 0.11.0-4
+- bpftrace 0.11
+
 * Fri Sep 11 2020 bas smit - 0.11.0-3
-- bpftrace 0.11 f543461
+- bpftrace 0.11 91b0705
 
 * Fri Aug 21 2020 bas smit - 0.11.0-2
 - bpftrace 0.11 2476917
