@@ -1,0 +1,33 @@
+From 75fb5f081e3ccfe3cbcf6616135214575ec4ff95 Mon Sep 17 00:00:00 2001
+From: Erik Dekker <erik@erikdekker.net>
+Date: Fri, 5 Feb 2021 11:26:03 +0100
+Subject: [PATCH] Don't check blacklist as it is not available in CentOS 7
+
+---
+ src/python/bcc/__init__.py | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/src/python/bcc/__init__.py b/src/python/bcc/__init__.py
+index 8d87945c..92a84a6f 100644
+--- a/src/python/bcc/__init__.py
++++ b/src/python/bcc/__init__.py
+@@ -554,15 +554,7 @@ class BPF(object):
+ 
+     @staticmethod
+     def get_kprobe_functions(event_re):
+-        blacklist_file = "%s/../kprobes/blacklist" % TRACEFS
+-        try:
+-            with open(blacklist_file, "rb") as blacklist_f:
+-                blacklist = set([line.rstrip().split()[1] for line in blacklist_f])
+-        except IOError as e:
+-            if e.errno != errno.EPERM:
+-                raise e
+-            blacklist = set([])
+-
++        blacklist = set([])
+         fns = []
+ 
+         in_init_section = 0
+-- 
+2.28.0
+
