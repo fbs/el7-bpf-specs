@@ -1,12 +1,13 @@
 Name:           bcc
 Version:        0.16.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
 # Generate source tarball until upstream bug is fixed
 # See https://github.com/iovisor/bcc/issues/2261
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Patch1:         0001-Don-t-check-blacklist-as-it-is-not-available-in-Cent.patch
 
 ExclusiveArch:  x86_64
 
@@ -93,6 +94,8 @@ rm -rf bcc
 git clone %{url}
 cd bcc
 
+%patch1 -p1
+
 %build
 
 . /opt/rh/devtoolset-8/enable
@@ -173,6 +176,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Fri Feb 5 2021 Erik Dekker <erik@erikdekker.net> - 0.16.0-2
+- Disable blacklist kprobe as it is unavailable in CE7
+
 * Tue Nov 3 2020 bas smit <bas@baslab.org> - 0.16.0-1
 - Bump to bcc 0.16
 
