@@ -1,0 +1,38 @@
+From 533790bcba6fc235ad55bfda0ff049b9a66f08fd Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Sat, 1 May 2021 13:33:00 +0200
+Subject: [PATCH] Relink against libz
+
+The ordering is messed, can't find libz for libcc. This fixes it in a
+hacky way.
+---
+ src/CMakeLists.txt   | 3 +++
+ tests/CMakeLists.txt | 1 +
+ 2 files changed, 4 insertions(+)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 38dcdb8..cb3e755 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -169,6 +169,9 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_VERSION}
+   target_link_libraries(libbpftrace "stdc++fs")
+ endif()
+ 
++
++target_link_libraries(libbpftrace ${LIBZ_LIBRARIES})
++
+ if (BUILD_ASAN)
+   if(${CMAKE_VERSION} VERSION_LESS "3.13.0")
+     # target_link_options is supported in CMake 3.13 and newer
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 8d546f9..dc14cf3 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -198,3 +198,4 @@ if(ENABLE_TEST_VALIDATE_CODEGEN)
+ else()
+   message(STATUS "codegen-validator test disabled")
+ endif()
++target_link_libraries(bpftrace_test ${LIBZ_LIBRARIES})
+-- 
+2.24.3 (Apple Git-128)
+

@@ -1,5 +1,4 @@
 %global pkgname bpftrace
-%global commitid 487dd81
 
 # The static build is a bit of a hack and
 # doesn't build th docs and tools package
@@ -12,9 +11,9 @@
 %global _find_debuginfo_opts -g
 
 Name:           %{pkgname}
-Version:        0.11.0
+Version:        0.12.0
 %if "%{?commitid}" != ""
-Release:        5.%{?commitid}%{?dist}
+Release:        1.%{?commitid}%{?dist}
 %else
 Release:        1%{?dist}
 %endif
@@ -29,7 +28,7 @@ Patch2:         0001-tools-Patch-for-RHEL7.patch
 
 Patch100:       0001-build-Force-disable-optimization.patch
 Patch101:       0001-Do-not-require-libbpf-for-static-build.patch
-Patch102:       0001-Don-t-require-libbpf-for-build.patch
+Patch102:       0001-Relink-against-libz.patch
 
 
 ExclusiveArch:  x86_64
@@ -137,6 +136,9 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_datadir}/%{pkgname}/tools/doc/*.txt
 
 %changelog
+* Sat May 1 2021 bas smit - 0.12.0-1
+- bpftrace 0.12.0
+
 * Fri Nov 6 2020 bas smit - 0.11.0-5
 - bpftrace 0.11 487dd81 with bcc compatiblity fix
 
