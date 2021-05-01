@@ -20,12 +20,8 @@ Install:
 
 ```
 curl https://repos.baslab.org/bpftools.repo --output /etc/yum.repos.d/bpftools.repo
-yum install bpftrace-static bpftrace-tools bpftrace-docs bcc-static bcc-tools
+yum install bpftrace bpftrace-tools bpftrace-doc bcc-static bcc-tools
 ```
-
-Installing the `-static` versions is recommended as the LLVM packages are
-terrible.
-
 
 # bpftrace
 
@@ -206,6 +202,9 @@ the end. It starts of by building LLVM and Clang and creating a "builder" image
 with that, using that image it will build the other RPMs.
 As building LLVM & Clang takes a while the process can be sped up by reusing an
 earlier built image using the `--image-tag` flag
+
+A pre-build llvm image can be found
+[here](https://quay.io/repository/fbs/el7-bpf-specs?tab=tags)
 
 Alternatively you can build the spec files manually:
 
