@@ -102,7 +102,10 @@ cd bcc
 cd bcc
 %cmake3 . \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_VERBOSE_MAKEFILE=0
+    -DCMAKE_VERBOSE_MAKEFILE=0 \
+    -DENABLE_EXAMPLES=0 \
+    -DENABLE_TESTS=0 \
+    -DENABLE_LLVM_NATIVECODEGEN=0
 
 %make_build
 
