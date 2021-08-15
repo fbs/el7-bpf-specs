@@ -38,6 +38,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  devtoolset-8-gcc-c++
 BuildRequires:  ebpftoolsbuilder-llvm-clang-libs
 BuildRequires:  binutils-devel
+BuildRequires:  cereal-devel
 
 # For static:
 BuildRequires:  bcc-devel
@@ -49,6 +50,7 @@ BuildRequires:  elfutils-libelf-devel-static
 BuildRequires:  ebpftoolsbuilder-llvm-clang
 
 BuildRequires:  git
+BuildRequires:  rubygem-asciidoctor
 
 Requires:       kernel-devel
 Requires:       binutils

@@ -17,6 +17,8 @@ jobs:
         printf "repos.baslab.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGS0h8ivZYBV8PNd1fToex5hGhz259z4IgXyvZ9X/eXP" > ~/.ssh/known_hosts
     - name: login
       run: ssh repos -- 'hostname'
+    - name: install jq
+      run: sudo apt install -y -q jq
     - name: build
       run: ./build-daily.sh
     - name: copy repo
