@@ -63,6 +63,7 @@ build "${CTID}" "bpftool"
 build "${CTID}" "bcc"
 
 docker exec -i "${CTID}" find /root/rpmbuild/RPMS/ -name '*bcc*.rpm' -exec yum install -y {} +
+
 build "${CTID}" "bpftrace"
 
 docker cp "${CTID}:/root/rpmbuild/RPMS" .

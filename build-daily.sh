@@ -11,7 +11,7 @@ function build() {
     CTID="$1"
     tool="$2"
     shift; shift;
-    buildopts="$@"
+    local buildopts="$@"
     echo "Building $tool $buildopts"
     docker cp "${tool}/${tool}.spec" "$CTID:/root/"
     for p in "${tool}"/*.patch; do
@@ -40,8 +40,18 @@ set -e
 
 docker start "$CTID"
 
+if ! SHA=$(curl -s https://api.github.com/repos/iovisor/bpftrace/commits/master | jq -r '.sha' | cut -c 1-7); then
+  echo "Could not determine latest commit hash"
+  exit 1
+else
+  echo "Using commit hash: $SHA"
+  sed -i "1i%global commitid $SHA" bpftrace/bpftrace.spec
+fi
+
 docker exec "$CTID" \
   curl -so /etc/yum.repos.d/bpftools.repo http://repos.baslab.org/rhel/7/bpftools/bpftools.repo
+
+docker exec "$CTID" yum install -y epel-release
 docker exec "$CTID" yum install -y bcc-static bcc-devel
 
 build "${CTID}" "bpftrace"
