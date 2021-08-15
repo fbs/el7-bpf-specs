@@ -24,9 +24,14 @@ function build() {
     docker exec "$CTID" mkdir /root/rpmbuild/BUILD
 }
 
-if [ $EUID -ne 0 ]; then
-    >&2 echo "requires root"
-    exit 1
+if docker -v |grep -q podman; then
+  echo "using podman, test likely wont work"
+  PODMAN=1
+else
+  if [ $EUID -ne 0 ]; then
+      >&2 echo "requires root"
+      exit 1
+  fi
 fi
 
 TAG=""
