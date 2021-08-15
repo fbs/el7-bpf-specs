@@ -1,0 +1,42 @@
+From 9702c85d7565a75d52e12fc303c0f564cade6268 Mon Sep 17 00:00:00 2001
+From: bas smit <bas@baslab.org>
+Date: Sun, 15 Aug 2021 15:33:30 +0200
+Subject: [PATCH] Fix lib path for clang/llvm
+
+---
+ CMakeLists.txt               | 2 +-
+ cmake/embed/embed_llvm.cmake | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 43c0655a..1f3af973 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -32,7 +32,7 @@ if(EMBED_BUILD_LLVM)
+ endif()
+ 
+ if(EMBED_USE_LLVM AND NOT EMBED_BUILD_LLVM)
+-  set(EMBED_LLVM_PATH "/usr/local/lib")
++  set(EMBED_LLVM_PATH "/usr/lib64")
+ endif()
+ 
+ if(EMBED_USE_LLVM OR STATIC_LIBC)
+diff --git a/cmake/embed/embed_llvm.cmake b/cmake/embed/embed_llvm.cmake
+index 96feb469..8b40e5a0 100644
+--- a/cmake/embed/embed_llvm.cmake
++++ b/cmake/embed/embed_llvm.cmake
+@@ -100,6 +100,11 @@ set(LLVM_LIBRARY_TARGETS
+     LLVMWindowsManifest
+     LLVMXRay
+     LLVMSupport
++    LLVMX86AsmParser
++    LLVMX86Desc
++    LLVMX86Disassembler
++    LLVMX86Info
++    LLVMX86CodeGen
+     )
+ 
+ 
+-- 
+2.31.1
+

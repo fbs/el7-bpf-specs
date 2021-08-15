@@ -11,7 +11,7 @@
 %global _find_debuginfo_opts -g
 
 Name:           %{pkgname}
-Version:        0.12.0
+Version:        0.13.0
 %if "%{?commitid}" != ""
 Release:        1.%{?commitid}%{?dist}
 %else
@@ -22,13 +22,11 @@ License:        ASL 2.0
 
 URL:            https://github.com/iovisor/bpftrace
 Source0:        %{url}/archive/v%{version}.tar.gz
-Patch0:         0001-build-EL7-support.patch
 Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
 Patch2:         0001-tools-Patch-for-RHEL7.patch
 
 Patch100:       0001-build-Force-disable-optimization.patch
-Patch101:       0001-Do-not-require-libbpf-for-static-build.patch
-Patch102:       0001-Relink-against-libz.patch
+Patch102:       0001-Fix-lib-path-for-clang-llvm.patch
 
 
 ExclusiveArch:  x86_64
@@ -93,7 +91,6 @@ git checkout %{commitid}
 %patch1 -p1
 %patch2 -p1
 %patch100 -p1
-%patch101 -p1
 %patch102 -p1
 %else
 %autosetup -p1 -n bpftrace-%{version}
@@ -101,11 +98,21 @@ git checkout %{commitid}
 
 %build
 . /opt/rh/devtoolset-8/enable
+
+git clone https://github.com/libbpf/libbpf.git
+pushd libbpf/src
+BUILD_STATIC_ONLY=y OBJDIR=build make install install_uapi_headers
+popd
+
 %cmake3 . \
   -DCMAKE_BUILD_TYPE=Debug \
   -DBUILD_SHARED_LIBS:BOOL=OFF \
-  -DSTATIC_LIBC=ON \
-  -DSTATIC_LINKING=1
+  -DSTATIC_LIBC=OFF \
+  -DSTATIC_LINKING=1 \
+  -DLLVM_VERSION=12 \
+  -DEMBED_LLVM_VERSION=12 \
+  -DEMBED_USE_LLVM=1 \
+  -DVENDOR_GTEST=1
 
 %make_build
 ./tests/bpftrace_test --gtest_filter='*:-procmon.*'
@@ -136,6 +143,9 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_datadir}/%{pkgname}/tools/doc/*.txt
 
 %changelog
+* Sun Aug 15 2021 bas smit - 0.13.0-1
+- bpftrace 0.13.0
+
 * Sat May 1 2021 bas smit - 0.12.0-1
 - bpftrace 0.12.0
 
