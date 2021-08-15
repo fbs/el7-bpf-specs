@@ -68,6 +68,8 @@ build "${CTID}" "bpftrace"
 
 docker cp "${CTID}:/root/rpmbuild/RPMS" .
 cleanup
+find "RPMS" -name "*ebpftoolsbuilder*" -delete
+
 echo "##############################################"
 echo "Finished:"
 echo "Builder Image: ${TAG}"

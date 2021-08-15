@@ -58,6 +58,8 @@ build "${CTID}" "bpftrace"
 
 docker cp "${CTID}:/root/rpmbuild/RPMS" .
 cleanup
+find "RPMS" -name "*ebpftoolsbuilder*" -delete
+
 echo "##############################################"
 echo "Finished:"
 echo "RPMs can be found in: $(readlink -f RPMS)"
