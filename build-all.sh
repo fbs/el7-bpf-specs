@@ -49,10 +49,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -z $TAG ]; then
-    echo "No tag specified, building the builder container"
-    TAG="ebpftools-llvm-clang:$(date +%y%m%d_%s)"
-    docker build . -f llvm-clang-builder.Dockerfile -t $TAG
-    echo "Builder tag: $TAG"
+    echo "No tag specified, using quay.io/fbs/el7-bpf-specs:llvm_12_latest"
+    TAG="quay.io/fbs/el7-bpf-specs:llvm_12_latest"
 fi
 
 echo "Using $TAG as base"
