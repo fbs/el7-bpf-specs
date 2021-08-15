@@ -15,7 +15,7 @@ Version:        0.13.0
 %if "%{?commitid}" != ""
 Release:        1.%{?commitid}%{?dist}
 %else
-Release:        1%{?dist}
+Release:        2%{?dist}
 %endif
 Summary:        High-level tracing language for Linux eBPF
 License:        ASL 2.0
@@ -25,7 +25,6 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 Patch1:         0001-tools-ext4dist-based-on-xfsdist.patch
 Patch2:         0001-tools-Patch-for-RHEL7.patch
 
-Patch100:       0001-build-Force-disable-optimization.patch
 Patch102:       0001-Fix-lib-path-for-clang-llvm.patch
 
 
@@ -87,10 +86,8 @@ git checkout %{commitid}
 
 %setup -n bpftrace -D -T
 
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch100 -p1
 %patch102 -p1
 %else
 %autosetup -p1 -n bpftrace-%{version}
@@ -143,6 +140,9 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_datadir}/%{pkgname}/tools/doc/*.txt
 
 %changelog
+* Sun Aug 16 2021 bas smit - 0.13.0-2
+- Enable optimizations again
+
 * Sun Aug 15 2021 bas smit - 0.13.0-1
 - bpftrace 0.13.0
 
