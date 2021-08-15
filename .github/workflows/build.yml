@@ -1,0 +1,17 @@
+name: package build
+on: [push, pull_request]
+jobs:
+  build_rpms:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: build packages
+      run: './build-all.sh'
+    - name: upload rpms
+      uses: actions/upload-artifact@v2
+      with:
+        name: RPMS
+        path: RPMS/
+        if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn` 
+
