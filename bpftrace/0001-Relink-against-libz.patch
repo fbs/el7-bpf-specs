@@ -14,7 +14,7 @@ diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index 38dcdb8..cb3e755 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -169,6 +169,9 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_VERSION}
+@@ -156,6 +156,9 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_VERSION}
    target_link_libraries(libbpftrace "stdc++fs")
  endif()
  
