@@ -48,6 +48,8 @@ BuildRequires:  ncurses-static
 BuildRequires:  elfutils-libelf-devel-static
 BuildRequires:  ebpftoolsbuilder-llvm-clang
 
+BuildRequires:  git
+
 Requires:       kernel-devel
 Requires:       binutils
 
