@@ -60,6 +60,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+set -e
+
 docker start "$CTID"
 docker exec -i "$CTID" yum install -y gcc
 build "${CTID}" "bpftool"
