@@ -13,7 +13,7 @@
 Name:           %{pkgname}
 Version:        0.13.0
 %if "%{?commitid}" != ""
-Release:        2.%{?commitid}%{?dist}
+Release:        2.%{?date_tag}%{?commitid}%{?dist}
 %else
 Release:        2%{?dist}
 %endif
