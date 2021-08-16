@@ -144,7 +144,7 @@ find %{buildroot}%{_datadir}/%{pkgname}/tools -type f -exec \
 %{_datadir}/%{pkgname}/tools/doc/*.txt
 
 %changelog
-* Sun Aug 16 2021 bas smit - 0.13.0-2
+* Sun Aug 15 2021 bas smit - 0.13.0-2
 - Enable optimizations again
 
 * Sun Aug 15 2021 bas smit - 0.13.0-1
