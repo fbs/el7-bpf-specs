@@ -1,5 +1,9 @@
 name: package build
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
 jobs:
   build_rpms:
     runs-on: ubuntu-latest
