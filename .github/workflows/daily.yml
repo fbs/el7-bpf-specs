@@ -1,5 +1,7 @@
 name: daily build
-on: [push, pull_request]
+on:
+  schedule:
+  - cron: '0 0 * * 1'
 jobs:
   build_rpms:
     runs-on: ubuntu-latest
@@ -14,13 +16,16 @@ jobs:
         echo "$KEY" > ~/.ssh/id_ed25519
         ssh-keygen -yf ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
         printf "Host repos\n  Hostname repos.baslab.org\n  User github-actions\n  Identityfile ~/.ssh/id_ed25519" > ~/.ssh/config
-        printf "repos.baslab.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGS0h8ivZYBV8PNd1fToex5hGhz259z4IgXyvZ9X/eXP" > ~/.ssh/known_hosts
+        printf "repos.baslab.org,185.95.14.108 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGS0h8ivZYBV8PNd1fToex5hGhz259z4IgXyvZ9X/eXP" > ~/.ssh/known_hosts
     - name: login
       run: ssh repos -- 'hostname'
     - name: install jq
       run: sudo apt install -y -q jq
     - name: build
       run: ./build-daily.sh
-    - name: copy repo
-      run: scp -oStrictHostKeyChecking=no -r RPMS/ repos:inbox/
-
+    - name: update repo
+      if: >
+        ${{ github.event_name == 'schedule' }} || (github.ref == 'refs/heads/master' && github.repository == 'fbs/el7-bpf-specs')
+      run: |
+        scp -r RPMS/ repos:inbox/
+        ssh repos -- 'sudo /usr/local/bin/actions_repo_update'
