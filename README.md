@@ -14,12 +14,30 @@ Available tools:
 
 ## Repository
 
-Repository available at https://repos.baslab.org/bpftools/
+## Daily
+
+Daily bpftrace builds are available: https://repos.baslab.org/rhel/7/bpftrace-daily/
+
+Install
+
+```
+curl https://repos.baslab.org/rhel/7/bpftrace-daily/bpftrace-daily.repo --output /etc/yum.repos.d/bpftools.repo
+curl https://repos.baslab.org/rhel/7/bpftools/bpftools.repo --output /etc/yum.repos.d/bpftrace-daily.repo
+yum install bpftrace bpftrace-tools bpftrace-doc
+```
+
+Note that this only tracks bpftrace, the bpftools repo is still required for
+bcc&bpftool
+
+## Stable releases
+
+The repository available at https://repos.baslab.org/rhel/7/bpftools/ tracks offical
+bpftrace & bcc releases
 
 Install:
 
 ```
-curl https://repos.baslab.org/bpftools.repo --output /etc/yum.repos.d/bpftools.repo
+curl https://repos.baslab.org/rhel/7/bpftools/bpftools.repo --output /etc/yum.repos.d/bpftools.repo
 yum install bpftrace bpftrace-tools bpftrace-doc bcc-static bcc-tools
 ```
 
