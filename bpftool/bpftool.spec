@@ -1,5 +1,5 @@
 Name: bpftool
-Version: 5.5.7
+Version: 5.10.59
 Release: 1%{?dist}
 Summary: Inspection and simple manipulation of eBPF programs and maps
 License: GPLv2
