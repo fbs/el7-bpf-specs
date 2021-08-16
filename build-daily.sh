@@ -45,7 +45,10 @@ if ! SHA=$(curl -s https://api.github.com/repos/iovisor/bpftrace/commits/master 
   exit 1
 else
   echo "Using commit hash: $SHA"
+  pkg_date=$(date '+%Y%m%d')
+  echo "Using date tag: $pkg_date"
   sed -i "1i%global commitid $SHA" bpftrace/bpftrace.spec
+  sed -i "2i%global date_tag $pkg_date" bpftrace/bpftrace.spec
 fi
 
 docker exec "$CTID" \
