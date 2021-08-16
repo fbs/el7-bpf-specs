@@ -1,6 +1,6 @@
 Name:           bcc
-Version:        0.16.0
-Release:        2%{?dist}
+Version:        0.21.0
+Release:        1%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
