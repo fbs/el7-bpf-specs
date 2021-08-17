@@ -1,7 +1,7 @@
 name: daily build
 on:
   schedule:
-  - cron: '0 0 * * 1'
+  - cron: '13 0 * * *'
 jobs:
   build_rpms:
     runs-on: ubuntu-latest
