@@ -185,7 +185,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 * Tue Nov 3 2020 bas smit <bas@baslab.org> - 0.16.0-1
 - Bump to bcc 0.16
 
-* Tue Jun 25 2020 bas smit <bas@baslab.org> - 0.15.0-1
+* Thu Jun 25 2020 bas smit <bas@baslab.org> - 0.15.0-1
 - Bump to bcc 0.15
 
 * Tue Mar 3 2020 bas smit <bas@baslab.org> - 0.12.0-2
