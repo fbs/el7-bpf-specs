@@ -58,6 +58,7 @@ fi
 set -e
 
 docker start "$CTID"
+docker exec -i "$CTID" rm -f '/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo' '/etc/yum.repos.d/CentOS-SCLo-scl.repo'
 docker exec -i "$CTID" yum install -y gcc
 build "${CTID}" "bpftool"
 build "${CTID}" "bcc"
