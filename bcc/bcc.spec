@@ -1,5 +1,5 @@
 Name:           bcc
-Version:        0.21.0
+Version:        0.22.0
 Release:        1%{?dist}
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
@@ -15,7 +15,7 @@ BuildRequires:  bison
 BuildRequires:  cmake3
 BuildRequires:  flex
 BuildRequires:  libxml2-devel
-BuildRequires:  python-devel
+BuildRequires:  python3-devel
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  ncurses-devel
 BuildRequires:  make
@@ -24,6 +24,7 @@ BuildRequires:  ebpftoolsbuilder-llvm-clang
 BuildRequires:  git
 
 Requires:       kernel-devel
+Requires:       python3
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -155,7 +156,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 %{_includedir}/%{name}/
 
 %files -n python-%{name}
-%{python_sitelib}/%{name}*
+%{python3_sitelib}/%{name}*
 
 %files doc
 %dir %{_docdir}/%{name}
