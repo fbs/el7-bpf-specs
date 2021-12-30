@@ -102,6 +102,7 @@ git checkout %{commitid}
 
 git clone https://github.com/libbpf/libbpf.git
 pushd libbpf/src
+git checkout v0.5.0
 BUILD_STATIC_ONLY=y OBJDIR=build make install install_uapi_headers
 popd
 
